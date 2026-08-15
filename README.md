@@ -1,13 +1,15 @@
 # dsh-usage-lens
 
-DeepSeek Harness（DSH）Web UI 的**用量统计面板**。安装后，设置面板会新增「用量统计」页面，直观展示你的使用情况。
+DeepSeek Harness（DSH）Web UI 的**用量统计面板**，风格参考作者喜欢的ZCode Harness设计。
+安装后，设置面板会新增「用量统计」页面，直观展示你的使用情况。
 
 ## 预览
 
-<p align="center">
-  <img src="assets/preview/预览1.png" width="45%" alt="预览1" />
-  <img src="assets/preview/预览2.png" width="45%" alt="预览2" />
-</p>
+
+<img src="assets/preview/预览1.png" width="90%" alt="预览1" />
+
+<img src="assets/preview/预览2.png" width="90%" alt="预览2" />
+
 
 ## 功能
 
@@ -33,12 +35,12 @@ pnpm install
 pnpm build
 dsh plugin --profile web add link:<本仓库绝对路径>
 ```
+> 说明：`link:` 方式指向本地源码，修改代码后重新 `pnpm build` 并重启 web 服务即可生效，无需重新安装。也可以直接从本仓库路径安装：`dsh plugin --profile web add <本仓库路径>`。
 
 ### 安装后
 
 重启 web 服务，打开设置面板即可看到「用量统计」。
 
-> 说明：`link:` 方式指向本地源码，修改代码后重新 `pnpm build` 并重启 web 服务即可生效，无需重新安装。也可以直接从本仓库路径安装：`dsh plugin --profile web add <本仓库路径>`。
 
 ## 数据说明
 
