@@ -1,6 +1,6 @@
 {
   "name": "dsh-usage-lens",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "DSH web plugin: a usage statistics dashboard (basic info, activity heatmap, daily token trend, model usage donut) with provider/model drill-down, following the DSH theme system.",
   "type": "module",
   "main": "lib/index.js",
