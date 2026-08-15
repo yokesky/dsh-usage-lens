@@ -18,38 +18,45 @@ DeepSeek Harness（DSH）Web UI 的**用量统计面板**。安装后，设置�
 
 ## 安装
 
-两种方式任选其一。
-
-### 方式一：npm 发布版（推荐）
+### 方式一：npm 发布版（推荐，装完即用）
 
 ```sh
 dsh plugin --profile web add dsh-usage-lens
 ```
 
-包内已含构建产物，装完即可用，无需任何额外步骤。
+包内已含构建产物，无需任何额外步骤。**绝大多数用户请使用本方式。**
 
-### 方式二：GitHub 仓库（git 安装）
+### 方式二：GitHub 仓库（仅适合开发者）
 
 ```sh
 dsh plugin --profile web add github:yokesky/dsh-usage-lens
 ```
 
-git 安装**不包含构建产物**，装完后需要手动构建一次（否则 dsh 启动会报 `Cannot find module .../lib/index.js`）：
+git 安装不含构建产物，需要手动构建，且过程依赖较多，**仅供开发者调试源码使用**。
+
+#### 步骤 1：放行构建脚本
+
+首次安装会报 `ERR_PNPM_IGNORED_BUILDS`。把报错提示的**完整 key**（形如 `dsh-usage-lens@https://codeload.github.com/yokesky/dsh-usage-lens/tar.gz/<commit-SHA>`）加入 `$DSH_HOME\profiles\web\pnpm-workspace.yaml` 的 `allowBuilds`（值设 `true`），重新执行安装命令。
+
+> ⚠️ key 里的 commit-SHA 会随仓库提交变化，每次更新插件后 key 都需重新放行。
+
+#### 步骤 2：手动构建
 
 ```sh
 # Windows PowerShell
 cd $env:DSH_HOME\profiles\web\node_modules\dsh-usage-lens
-pnpm install
-pnpm build
+npm install
+npm install -D tsx
+pnpm exec tsdown --config-loader tsx
 ```
 
-> 若安装时提示 `ERR_PNPM_IGNORED_BUILDS`，说明 pnpm 11 拦截了构建脚本，需把 `dsh-usage-lens` 加入 `$DSH_HOME\profiles\web\pnpm-workspace.yaml` 的 `allowBuilds` 后重试。
+> 必须用 `npm install`（pnpm 不会为 git 包安装 devDependencies）；tsdown 读取位于 `node_modules` 下的 TS 配置文件时需要 `--config-loader tsx`（Node 24.11.1 之前的已知限制）。
 
-> 也可以从本地路径安装：`dsh plugin --profile web add <本仓库路径>`（本地路径需先 `pnpm install && pnpm build`）。
-
-### 安装后
+#### 安装后
 
 重启 web 服务，打开设置面板即可看到「用量统计」。
+
+> 从本地源码目录安装（开发调试）：`dsh plugin --profile web add <本仓库路径>`，同样需先构建（`pnpm install && pnpm build`）。
 
 ## 数据说明
 
