@@ -30,6 +30,7 @@ dsh plugin --profile web add dsh-usage-lens
 ### 方式二：源码
 
 ```sh
+# 需要已安装 dsh CLI（npm install -g @deepseek-ai/dsh），如已装可跳过
 git clone https://github.com/yokesky/dsh-usage-lens.git
 cd dsh-usage-lens
 pnpm install
