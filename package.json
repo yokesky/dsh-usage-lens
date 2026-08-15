@@ -1,6 +1,6 @@
 {
   "name": "@yokesky/dsh-usage-lens",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "DSH web plugin: a usage statistics dashboard (basic info, activity heatmap, daily token trend, model usage donut) with provider/model drill-down, following the DSH theme system.",
   "type": "module",
   "main": "lib/index.js",
@@ -39,7 +39,11 @@
     "dashboard",
     "analytics",
     "heatmap",
-    "cordis"
+    "cordis",
+    "usage-dashboard",
+    "token-analytics",
+    "statistics",
+    "stats"
   ],
   "files": [
     "lib",
