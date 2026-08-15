@@ -40,8 +40,6 @@ dsh plugin --profile web add link:<本仓库绝对路径>
 
 > 说明：`link:` 方式指向本地源码，修改代码后重新 `pnpm build` 并重启 web 服务即可生效，无需重新安装。也可以直接从本仓库路径安装：`dsh plugin --profile web add <本仓库路径>`。
 
-> 不使用 `github:` 协议安装：git 安装需要 pnpm 现场执行构建脚本，会触发 pnpm 11 的构建脚本安全拦截（`ERR_PNPM_IGNORED_BUILDS`），需按报错提示在 `pnpm-workspace.yaml` 手动放行（key 形如 `dsh-usage-lens@https://codeload.github.com/.../tar.gz/<commit-SHA>`，且随提交变化）；`link:` 方式无此步骤。
-
 ## 数据说明
 
 - 所有数据来自你本机的 DSH 会话记录，只在本地处理，不会上传到任何地方。
