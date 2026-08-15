@@ -5,6 +5,17 @@ node_modules/
 lib/
 *.tsbuildinfo
 
+# Vision-loop / throwaway artifacts
+.dsh-vision-toolkit/
+visual/
+assets/reference/
+
+# Developer-only (kept out of the public repo)
+docs/
+tests/
+AGENTS.md
+vitest.config.ts
+
 # Logs / temp
 *.log
 
