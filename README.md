@@ -18,13 +18,38 @@ DeepSeek Harness（DSH）Web UI 的**用量统计面板**。安装后，设置�
 
 ## 安装
 
+两种方式任选其一。
+
+### 方式一：npm 发布版（推荐）
+
+```sh
+dsh plugin --profile web add dsh-usage-lens
+```
+
+包内已含构建产物，装完即可用，无需任何额外步骤。
+
+### 方式二：GitHub 仓库（git 安装）
+
 ```sh
 dsh plugin --profile web add github:yokesky/dsh-usage-lens
 ```
 
-安装后重启 web 服务，打开设置面板即可看到「用量统计」。
+git 安装**不包含构建产物**，装完后需要手动构建一次（否则 dsh 启动会报 `Cannot find module .../lib/index.js`）：
 
-> 也可以从本地路径安装：`dsh plugin --profile web add <本仓库路径>`
+```sh
+# Windows PowerShell
+cd $env:DSH_HOME\profiles\web\node_modules\dsh-usage-lens
+pnpm install
+pnpm build
+```
+
+> 若安装时提示 `ERR_PNPM_IGNORED_BUILDS`，说明 pnpm 11 拦截了构建脚本，需把 `dsh-usage-lens` 加入 `$DSH_HOME\profiles\web\pnpm-workspace.yaml` 的 `allowBuilds` 后重试。
+
+> 也可以从本地路径安装：`dsh plugin --profile web add <本仓库路径>`（本地路径需先 `pnpm install && pnpm build`）。
+
+### 安装后
+
+重启 web 服务，打开设置面板即可看到「用量统计」。
 
 ## 数据说明
 
