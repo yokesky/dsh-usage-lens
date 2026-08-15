@@ -1,0 +1,12 @@
+# dsh-usage-lens bundle patch
+#
+# Installed through the official CLI:
+#
+#   dsh plugin --profile <name> add <local checkout path>
+#
+# — which appends `dsh-usage-lens` to the profile bundle stack and applies
+# this patch (one inserted plugin row). The row's `name` resolves the package
+# by name inside the profile node_modules.
+- insert:
+    - id: usage-lens
+      name: 'dsh-usage-lens'

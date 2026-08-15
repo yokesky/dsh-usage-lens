@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Build output
+lib/
+*.tsbuildinfo
+
+# Logs / temp
+*.log
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Test / coverage
+coverage/
+
+# OS cruft
+.DS_Store
+Thumbs.db
+Desktop.ini

@@ -1,0 +1,556 @@
+/* dsh-usage-lens panel styles.
+ *
+ * Theme policy (docs/web-styling.md): feature components consume the
+ * `--dsw-alias-*` semantic tokens; light/dark flipping is owned by ui-layout
+ * (body[data-ds-dark-theme]). Chart series colors are theme-independent.
+ * The panel renders inside the settings content column (~564px), so every
+ * block fills its container — no fixed pixel minimums that would overflow.
+ */
+
+.panel {
+  --ul-card: var(--dsw-alias-button-elevated-fill);
+  --ul-text: var(--dsw-alias-label-primary);
+  --ul-text-dim: var(--dsw-alias-label-secondary);
+  --ul-text-faint: var(--dsw-alias-label-caption);
+  --ul-border: var(--dsw-alias-border-inverted);
+  --ul-hover: var(--dsw-alias-interactive-bg-hover);
+  --ul-accent: var(--dsw-alias-button-info-fill);
+  --ul-on-accent: var(--dsw-static-neutral-bluish-00);
+  box-sizing: border-box;
+  width: 100%;
+  color: var(--ul-text);
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 2px 2px 24px;
+}
+
+.panel *,
+.panel *::before,
+.panel *::after {
+  box-sizing: border-box;
+}
+
+/* ── Title row ─────────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: 0.2px;
+}
+
+.rangeSwitch {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 999px;
+  border: 1px solid var(--ul-border);
+  background: var(--ul-hover);
+  gap: 2px;
+}
+
+.rangeBtn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--ul-text-dim);
+  font: inherit;
+  font-size: 12.5px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.rangeBtn:hover {
+  color: var(--ul-text);
+}
+
+.rangeBtn.active {
+  background: var(--ul-accent);
+  color: var(--ul-on-accent);
+  font-weight: 550;
+}
+
+/* ── Info cards grid ───────────────────────────────────────────────── */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.card {
+  background: var(--ul-card);
+  border: 1px solid var(--ul-border);
+  border-radius: 12px;
+  padding: 14px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.cardLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ul-text-faint);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.cardIcon {
+  width: 13px;
+  height: 13px;
+  flex: none;
+  opacity: 0.75;
+}
+
+.cardValue {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Top-model value: same size as the label, but bold. */
+.cardValueModel {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardSub {
+  color: var(--ul-text-dim);
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Section blocks ────────────────────────────────────────────────── */
+
+.block {
+  background: var(--ul-card);
+  border: 1px solid var(--ul-border);
+  border-radius: 12px;
+  padding: 14px 16px 14px;
+  margin-bottom: 16px;
+  min-width: 0;
+}
+
+.blockTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.blockTitle {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── Heatmap ───────────────────────────────────────────────────────── */
+
+.heatmapWrap {
+  position: relative;
+  min-width: 0;
+}
+
+.heatmapGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.hmRow {
+  display: flex;
+  gap: 3px;
+  justify-content: flex-end;
+}
+
+/* Cell size comes from inline style (square, fills the measured width). */
+.hmCell {
+  border-radius: 3px;
+  background: var(--ul-hover);
+  position: relative;
+}
+
+.hmTooltip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--ul-card);
+  border: 1px solid var(--ul-border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  padding: 6px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 20;
+}
+
+.hmCell.hmEmpty {
+  background: transparent;
+}
+
+.hmCell.level1 { background: rgba(65, 118, 230, 0.22); }
+.hmCell.level2 { background: rgba(65, 118, 230, 0.42); }
+.hmCell.level3 { background: rgba(65, 118, 230, 0.66); }
+.hmCell.level4 { background: rgba(65, 118, 230, 0.92); }
+
+.heatmapLegend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 11.5px;
+  color: var(--ul-text-faint);
+}
+
+.hmSwatch {
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
+  background: var(--ul-hover);
+}
+
+.hmSwatch.l1 { background: rgba(65, 118, 230, 0.22); }
+.hmSwatch.l2 { background: rgba(65, 118, 230, 0.42); }
+.hmSwatch.l3 { background: rgba(65, 118, 230, 0.66); }
+.hmSwatch.l4 { background: rgba(65, 118, 230, 0.92); }
+
+/* ── Trend chart ───────────────────────────────────────────────────── */
+
+.trendChart {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.trendSvg {
+  display: block;
+  width: 100%;
+}
+
+.trendAxis {
+  stroke: var(--ul-border);
+  stroke-width: 1;
+}
+
+.trendGrid {
+  stroke: var(--ul-border);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+  opacity: 0.6;
+}
+
+.trendTick {
+  fill: var(--ul-text-faint);
+  font-size: 11px;
+}
+
+.trendLabel {
+  fill: var(--ul-text-faint);
+  font-size: 11px;
+}
+
+.trendColumn {
+  cursor: pointer;
+}
+
+/* Trend bars: animate geometry/color changes and fade in on mount so 7↔30
+   day switches and 厂商/模型 toggles look continuous. */
+.trendBar {
+  transition: y 0.4s ease, height 0.4s ease, x 0.4s ease, width 0.4s ease, fill 0.4s ease;
+  animation: usageLensBarIn 0.4s ease;
+}
+
+@keyframes usageLensBarIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.trendTooltip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--ul-card);
+  border: 1px solid var(--ul-border);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  padding: 10px 14px;
+  font-size: 12px;
+  z-index: 20;
+  min-width: 280px;
+  max-width: 360px;
+}
+
+/* First row: date (left) + day total (right). */
+.ttHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--ul-border);
+}
+
+.ttDate {
+  font-weight: 600;
+}
+
+.ttTotalTokens {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ttRow {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  line-height: 1.7;
+}
+
+.ttDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  flex: none;
+}
+
+/* Full model name + amount: wrap instead of truncating. */
+.ttName {
+  color: var(--ul-text-dim);
+  flex: 1;
+  min-width: 0;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.ttTokens {
+  font-variant-numeric: tabular-nums;
+  font-weight: 550;
+  white-space: nowrap;
+  margin-left: 8px;
+}
+
+/* ── Donut ─────────────────────────────────────────────────────────── */
+
+.donutLayout {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  min-width: 0;
+}
+
+.donutSvg {
+  display: block;
+  width: 176px;
+  height: 176px;
+  flex: none;
+}
+
+/* Donut arcs: smoothly morph segment sizes on range/mode changes. */
+.donutArc {
+  transition: stroke-dasharray 0.45s ease, stroke-dashoffset 0.45s ease, stroke 0.45s ease;
+}
+
+.donutSlice {
+  cursor: pointer;
+  transition: opacity 0.12s ease;
+}
+
+.donutSlice:hover {
+  opacity: 0.82;
+}
+
+.donutCenter {
+  font-size: 12.5px;
+  font-weight: 700;
+  fill: var(--ul-text);
+  text-anchor: middle;
+}
+
+.donutCenterUnit {
+  font-size: 9.5px;
+  font-weight: 500;
+  fill: var(--ul-text-faint);
+  text-anchor: middle;
+}
+
+.donutTable {
+  flex: 1;
+  min-width: 0;
+  max-height: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 4px;
+}
+
+/* Summary mode: provider column + stacked model rows (3 visual columns). */
+.tableGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 4px;
+  border-radius: 8px;
+  min-width: 0;
+}
+
+.tableProvider {
+  flex: none;
+  width: 72px;
+  border: none;
+  background: transparent;
+  color: var(--ul-text);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: left;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tableModels {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tableModelRow,
+.tableFlatRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.tableModelRow:hover,
+.tableFlatRow:hover {
+  background: var(--ul-hover);
+}
+
+.tableName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.tableTokens {
+  color: var(--ul-text-dim);
+  font-size: 12px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.tableShare {
+  width: 40px;
+  flex: none;
+  text-align: right;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Chart legend (trend) ──────────────────────────────────────────── */
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-top: 10px;
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--ul-text-dim);
+}
+
+.legendDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex: none;
+}
+
+/* ── States ────────────────────────────────────────────────────────── */
+
+.errorBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ul-card);
+  border: 1px solid var(--ul-border);
+  border-left: 3px solid var(--dsw-alias-interactive-bg-hover-danger, #e5484d);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--ul-text-dim);
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.errorRetry {
+  appearance: none;
+  border: 1px solid var(--ul-border);
+  background: var(--ul-hover);
+  color: var(--ul-text);
+  font: inherit;
+  font-size: 12.5px;
+  border-radius: 999px;
+  padding: 3px 14px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.empty {
+  color: var(--ul-text-faint);
+  font-size: 13px;
+  text-align: center;
+  padding: 24px 0;
+}
+
+.loading {
+  color: var(--ul-text-faint);
+  font-size: 13px;
+  text-align: center;
+  padding: 32px 0;
+}

@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "ignoreDeprecations": "6.0",
+    "noUncheckedIndexedAccess": true,
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "schemastery": ["node_modules/schemastery"],
+      "@deepseek-ai/cordis": ["D:/AIAgent/DSH/deepseek-harness/packages/client/ui-theme/node_modules/@deepseek-ai/cordis"],
+      "@deepseek-ai/dsh-client-ui-slots": ["D:/AIAgent/DSH/deepseek-harness/packages/client/ui-slots"],
+      "@deepseek-ai/dsh-client-locale": ["D:/AIAgent/DSH/deepseek-harness/packages/client/locale"],
+      "@deepseek-ai/dsh-client-runtime": ["D:/AIAgent/DSH/deepseek-harness/packages/client/runtime"]
+    }
+  },
+  "include": ["src", "tests"]
+}
