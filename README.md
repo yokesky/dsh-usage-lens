@@ -18,45 +18,31 @@ DeepSeek Harness（DSH）Web UI 的**用量统计面板**。安装后，设置�
 
 ## 安装
 
-### 方式一：npm 发布版（推荐，装完即用）
+两种方式对应两种人群，按需选择。
+
+### 方式一：npm 发布版（普通用户，装完即用）
 
 ```sh
 dsh plugin --profile web add dsh-usage-lens
 ```
 
-包内已含构建产物，无需任何额外步骤。**绝大多数用户请使用本方式。**
+包内已含构建产物，一行命令装完即用，无需任何额外步骤。
 
-### 方式二：GitHub 仓库（仅适合开发者）
-
-```sh
-dsh plugin --profile web add github:yokesky/dsh-usage-lens
-```
-
-git 安装不含构建产物，需要手动构建，且过程依赖较多，**仅供开发者调试源码使用**。
-
-#### 步骤 1：放行构建脚本
-
-首次安装会报 `ERR_PNPM_IGNORED_BUILDS`。把报错提示的**完整 key**（形如 `dsh-usage-lens@https://codeload.github.com/yokesky/dsh-usage-lens/tar.gz/<commit-SHA>`）加入 `$DSH_HOME\profiles\web\pnpm-workspace.yaml` 的 `allowBuilds`（值设 `true`），重新执行安装命令。
-
-> ⚠️ key 里的 commit-SHA 会随仓库提交变化，每次更新插件后 key 都需重新放行。
-
-#### 步骤 2：手动构建
+### 方式二：源码本地安装（开发者，便于复现与改代码）
 
 ```sh
-# Windows PowerShell
-cd $env:DSH_HOME\profiles\web\node_modules\dsh-usage-lens
-npm install
-npm install -D tsx
-pnpm exec tsdown --config-loader tsx
+git clone https://github.com/yokesky/dsh-usage-lens.git
+cd dsh-usage-lens
+pnpm install
+pnpm build
+dsh plugin --profile web add link:<本仓库绝对路径>
 ```
 
-> 必须用 `npm install`（pnpm 不会为 git 包安装 devDependencies）；tsdown 读取位于 `node_modules` 下的 TS 配置文件时需要 `--config-loader tsx`（Node 24.11.1 之前的已知限制）。
+安装后重启 web 服务，打开设置面板即可看到「用量统计」。
 
-#### 安装后
+> 说明：`link:` 方式指向本地源码，修改代码后只需重新 `pnpm build` 并重启 web 服务即可生效，无需重新安装。也可以直接从本仓库路径安装：`dsh plugin --profile web add <本仓库路径>`。
 
-重启 web 服务，打开设置面板即可看到「用量统计」。
-
-> 从本地源码目录安装（开发调试）：`dsh plugin --profile web add <本仓库路径>`，同样需先构建（`pnpm install && pnpm build`）。
+> 为什么不建议 `github:` 协议安装：git 安装需要 pnpm 现场执行构建脚本，会触发 pnpm 11 的构建脚本安全拦截（`ERR_PNPM_IGNORED_BUILDS`），需要按报错提示在 `pnpm-workspace.yaml` 手动放行（key 形如 `dsh-usage-lens@https://codeload.github.com/.../tar.gz/<commit-SHA>`，且随提交变化）；`link:` 方式没有这些步骤。
 
 ## 数据说明
 
