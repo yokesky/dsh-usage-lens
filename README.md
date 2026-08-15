@@ -18,17 +18,13 @@ DeepSeek Harness（DSH）Web UI 的**用量统计面板**。安装后，设置�
 
 ## 安装
 
-两种方式对应两种人群，按需选择。
-
-### 方式一：npm 发布版（普通用户，装完即用）
+### 方式一：npm 包
 
 ```sh
 dsh plugin --profile web add dsh-usage-lens
 ```
 
-包内已含构建产物，一行命令装完即用，无需任何额外步骤。
-
-### 方式二：源码本地安装（开发者，便于复现与改代码）
+### 方式二：源码
 
 ```sh
 git clone https://github.com/yokesky/dsh-usage-lens.git
@@ -38,11 +34,13 @@ pnpm build
 dsh plugin --profile web add link:<本仓库绝对路径>
 ```
 
-安装后重启 web 服务，打开设置面板即可看到「用量统计」。
+### 安装后
 
-> 说明：`link:` 方式指向本地源码，修改代码后只需重新 `pnpm build` 并重启 web 服务即可生效，无需重新安装。也可以直接从本仓库路径安装：`dsh plugin --profile web add <本仓库路径>`。
+重启 web 服务，打开设置面板即可看到「用量统计」。
 
-> 为什么不建议 `github:` 协议安装：git 安装需要 pnpm 现场执行构建脚本，会触发 pnpm 11 的构建脚本安全拦截（`ERR_PNPM_IGNORED_BUILDS`），需要按报错提示在 `pnpm-workspace.yaml` 手动放行（key 形如 `dsh-usage-lens@https://codeload.github.com/.../tar.gz/<commit-SHA>`，且随提交变化）；`link:` 方式没有这些步骤。
+> 说明：`link:` 方式指向本地源码，修改代码后重新 `pnpm build` 并重启 web 服务即可生效，无需重新安装。也可以直接从本仓库路径安装：`dsh plugin --profile web add <本仓库路径>`。
+
+> 不使用 `github:` 协议安装：git 安装需要 pnpm 现场执行构建脚本，会触发 pnpm 11 的构建脚本安全拦截（`ERR_PNPM_IGNORED_BUILDS`），需按报错提示在 `pnpm-workspace.yaml` 手动放行（key 形如 `dsh-usage-lens@https://codeload.github.com/.../tar.gz/<commit-SHA>`，且随提交变化）；`link:` 方式无此步骤。
 
 ## 数据说明
 
