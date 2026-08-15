@@ -1,6 +1,6 @@
 /**
  * Plugin configuration. Tunables a deployment may set in cordis.yml; the
- * schema carries the defaults, so a bare `name: dsh-usage-lens` row works.
+ * schema carries the defaults, so a bare `name: @yokesky/dsh-usage-lens` row works.
  * @module dsh-usage-lens/config
  */
 

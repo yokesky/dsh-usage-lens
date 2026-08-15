@@ -83,7 +83,7 @@ const clientBundle: UserConfig = {
         `const tagId = ${JSON.stringify(tagId)};`,
         'if (typeof document !== \'undefined\' && document.querySelector(\'style[data-plugin-css=\' + JSON.stringify(tagId) + \']\') === null) {',
         '  const tag = document.createElement(\'style\');',
-        '  tag.dataset.plugin = \'dsh-usage-lens\';',
+        '  tag.dataset.plugin = \'@yokesky/dsh-usage-lens\';',
         '  tag.dataset.pluginCss = tagId;',
         '  tag.textContent = css;',
         '  document.head.appendChild(tag);',
@@ -94,7 +94,7 @@ const clientBundle: UserConfig = {
   }],
   outputOptions: {
     entryFileNames: 'client.js',
-    banner: 'window.__ModuleLoader__.load({ id: "dsh-usage-lens", factory: (require) => {',
+    banner: 'window.__ModuleLoader__.load({ id: "@yokesky/dsh-usage-lens", factory: (require) => {',
     footer: 'return module.exports; } });',
     intro: 'var module = { exports: {} }; var exports = module.exports;',
   },

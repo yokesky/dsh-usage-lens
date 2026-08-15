@@ -28,7 +28,7 @@ export { UsageLensPanel, fileStore } from './api.ts'
 export type { UsageLensStore, PanelRequest } from './api.ts'
 
 /** Plugin identity for cordis.yml rows. */
-export const name = 'dsh-usage-lens'
+export const name = '@yokesky/dsh-usage-lens'
 
 /** Services required before mounting: the webserver routes and the loader's connection row. */
 export const inject = ['webServer', 'loader']

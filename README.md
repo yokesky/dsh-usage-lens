@@ -24,7 +24,7 @@ DeepSeek Harness（DSH）Web UI 的**用量统计面板**，风格参考作者�
 
 ```sh
 npm install -g @deepseek-ai/dsh   # 先安装 dsh CLI，然后才能执行 dsh 命令
-dsh plugin --profile web add dsh-usage-lens
+dsh plugin --profile web add @yokesky/dsh-usage-lens
 ```
 
 ### 方式二：源码
