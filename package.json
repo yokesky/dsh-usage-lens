@@ -45,6 +45,8 @@
     "lib",
     "src",
     "cordis.patch.yml",
+    "tsdown.config.ts",
+    "tsconfig.json",
     "README.md",
     "LICENSE"
   ],
