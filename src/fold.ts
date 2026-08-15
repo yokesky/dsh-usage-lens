@@ -46,11 +46,6 @@ export function bucketsFromUsage(usage: UsageRecord | null | undefined): UsageBu
   }
 }
 
-/** Whether a usage record carries any countable tokens. */
-export function hasAnyTokens(buckets: UsageBuckets): boolean {
-  return bucketTotal(buckets) > 0
-}
-
 /** Local date key (YYYY-MM-DD) of an epoch-ms timestamp, host timezone. */
 export function dayKeyOf(time: number): string {
   const d = new Date(time)
@@ -174,8 +169,15 @@ function applySample(
   for (const field of ['uncachedInput', 'output', 'cacheRead', 'cacheWrite'] as const) {
     state.totals[field] += buckets[field]
   }
-  state.stepUsages[key] = { buckets, provider, model, day }
-  if (total > 0) state.hasUsage = true
+  if (total > 0) {
+    state.stepUsages[key] = { buckets, provider, model, day }
+    state.hasUsage = true
+  } else {
+    // A zero-token sample contributes nothing, so it does not need to stay
+    // in the replacement table; if it replaced an earlier positive sample,
+    // the subtraction above already removed that sample's contribution.
+    delete state.stepUsages[key]
+  }
   return state
 }
 

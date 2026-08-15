@@ -14,6 +14,7 @@ import {
   useMemo,
   useRef,
   useState,
+  type KeyboardEvent as ReactKeyboardEvent,
   type ReactNode,
   type RefObject,
 } from 'react'
@@ -428,12 +429,23 @@ export function DonutChart({
           className: css.tableProvider,
           onClick: () => onSelectProvider(provider.name),
           title: displayName(provider.name),
-        }, displayName(provider.name)),
+        },
+          createElement('span', { className: css.legendDot, style: { background: providerColorOf(provider.name) } }),
+          createElement('span', { className: css.tableProviderName }, displayName(provider.name)),
+        ),
         createElement('div', { className: css.tableModels },
           provider.models.map((model) => createElement('div', {
             key: model.model,
             className: css.tableModelRow,
+            role: 'button',
+            tabIndex: 0,
             onClick: () => onSelectModel(model.model),
+            onKeyDown: (event: ReactKeyboardEvent<HTMLDivElement>) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault()
+                onSelectModel(model.model)
+              }
+            },
           },
             createElement('span', { className: css.legendDot, style: { background: modelColorOf(model.model) } }),
             createElement('span', { className: css.tableName, title: displayName(model.model) }, displayName(model.model)),
@@ -447,7 +459,15 @@ export function DonutChart({
       return providers.map((provider) => createElement('div', {
         key: provider.name,
         className: css.tableFlatRow,
+        role: 'button',
+        tabIndex: 0,
         onClick: () => onSelectProvider(provider.name),
+        onKeyDown: (event: ReactKeyboardEvent<HTMLDivElement>) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault()
+            onSelectProvider(provider.name)
+          }
+        },
       },
         createElement('span', { className: css.legendDot, style: { background: providerColorOf(provider.name) } }),
         createElement('span', { className: css.tableName, title: displayName(provider.name) }, displayName(provider.name)),
@@ -458,7 +478,15 @@ export function DonutChart({
     return models.map((model) => createElement('div', {
       key: model.model,
       className: css.tableFlatRow,
+      role: 'button',
+      tabIndex: 0,
       onClick: () => onSelectModel(model.model),
+      onKeyDown: (event: ReactKeyboardEvent<HTMLDivElement>) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          onSelectModel(model.model)
+        }
+      },
     },
       createElement('span', { className: css.legendDot, style: { background: modelColorOf(model.model) } }),
       createElement('span', { className: css.tableName, title: displayName(model.model) }, displayName(model.model)),
@@ -483,6 +511,14 @@ export function DonutChart({
         transform: `rotate(-90 ${C} ${C})`,
         className: `${css.donutArc}${onClick === undefined ? '' : ` ${css.donutSlice}`}`,
         onClick,
+        role: onClick === undefined ? undefined : 'button',
+        tabIndex: onClick === undefined ? undefined : 0,
+        onKeyDown: onClick === undefined ? undefined : (event: ReactKeyboardEvent<SVGCircleElement>) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault()
+            onClick()
+          }
+        },
       })),
       mode === 'summary'
         ? createElement(Fragment, null,
@@ -500,6 +536,14 @@ export function DonutChart({
             transform: `rotate(-90 ${C} ${C})`,
             className: `${css.donutArc}${onClick === undefined ? '' : ` ${css.donutSlice}`}`,
             onClick,
+            role: onClick === undefined ? undefined : 'button',
+            tabIndex: onClick === undefined ? undefined : 0,
+            onKeyDown: onClick === undefined ? undefined : (event: ReactKeyboardEvent<SVGCircleElement>) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault()
+                onClick()
+              }
+            },
           })),
         )
         : null,

@@ -59,15 +59,25 @@ export class UsageLensPanel {
   }
 
   private async refresh(): Promise<void> {
-    const cache = this.cache ?? (await this.store.load())
-    try {
+    if (this.cache === null) {
+      const cache = await this.store.load()
       await this.store.refresh(cache)
-    } catch (error) {
-      // A refresh failure must not take the panel down: serve the last
-      // known state when one exists, otherwise surface the error.
-      if (this.cache === null) throw error
+      this.cache = cache
+      await this.store.save(cache).catch(() => {})
+      return
     }
-    this.cache = cache
-    void this.store.save(cache).catch(() => {})
+    // Refresh a CLONE, not the live cache. `store.refresh` mutates in place
+    // and a failed refresh would otherwise leave the panel serving — and the
+    // save path persisting — a half-refreshed object. Awaiting the save keeps
+    // the single-flight lock held until the cache is durable, so the next
+    // panel request can never mutate an object that is being serialized.
+    const next = structuredClone(this.cache)
+    try {
+      await this.store.refresh(next)
+    } catch {
+      return // Serve the last known good state.
+    }
+    this.cache = next
+    await this.store.save(next).catch(() => {})
   }
 }

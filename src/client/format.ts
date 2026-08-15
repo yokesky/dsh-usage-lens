@@ -30,11 +30,6 @@ export function formatTokens(value: number): string {
   return String(Math.round(value))
 }
 
-/** Percent with integer rounding. */
-export function formatPercent(value: number): string {
-  return `${Math.round(value)}%`
-}
-
 /** Exact integer with thousands separators (1,234,567). */
 export function formatExact(value: number): string {
   if (!Number.isFinite(value) || value < 0) return '0'
@@ -48,12 +43,4 @@ export function formatDateShort(key: string): string {
   const day = Number(d)
   if (activeLocaleOf() === 'zh') return `${month}月${day}日`
   return `${month}/${day}`
-}
-
-/** Day-of-week letter header label (Mon..Sun). */
-export function formatWeekday(dayOfWeek: number, short = false): string {
-  const names = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-  const enNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-  if (activeLocaleOf() === 'en') return short ? enNames[dayOfWeek - 1]! : enNames[dayOfWeek - 1]!
-  return short ? names[dayOfWeek - 1]! : names[dayOfWeek - 1]!
 }

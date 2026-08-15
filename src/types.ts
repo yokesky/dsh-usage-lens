@@ -127,10 +127,3 @@ export function splitSourceKey(key: string): { provider: string; model: string }
 export function bucketTotal(buckets: UsageBuckets): number {
   return buckets.uncachedInput + buckets.output + buckets.cacheRead + buckets.cacheWrite
 }
-
-export const ZERO_BUCKETS: UsageBuckets = Object.freeze({
-  uncachedInput: 0,
-  output: 0,
-  cacheRead: 0,
-  cacheWrite: 0,
-})

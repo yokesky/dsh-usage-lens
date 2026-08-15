@@ -6,7 +6,7 @@
  * @module dsh-usage-lens/client/section
  */
 
-import { createElement, Fragment, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { createElement, Fragment, useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import type { PanelData, SourceTotal } from '../types.ts'
 import { api } from './api.ts'
 import { DonutChart, Heatmap, PROVIDER_PALETTE, SERIES_PALETTE, TrendChart, type DonutMode, type LevelSeries } from './charts.tsx'
@@ -89,8 +89,10 @@ export function UsageLensSection({ locale }: UsageLensSectionProps): ReactNode {
   // Trend aggregation level (厂商 / 模型), default 模型.
   const trendSeries = trendLevel === 'model' ? modelSeries : providerSeries
   const trendColorOf = trendLevel === 'model' ? modelColorOf : providerColorOf
-  const trendGroupOf = (source: SourceTotal): string =>
-    trendLevel === 'model' ? source.model : source.provider
+  const trendGroupOf = useCallback(
+    (source: SourceTotal): string => (trendLevel === 'model' ? source.model : source.provider),
+    [trendLevel],
+  )
 
   const card = (label: string, value: string, valueClass: string | undefined, sub: string | null, icon: string, key: string): ReactNode =>
     createElement('div', { className: css.card, key },

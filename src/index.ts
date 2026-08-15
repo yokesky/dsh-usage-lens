@@ -50,8 +50,9 @@ export function apply(ctx: Context, config?: UsageLensConfig): void {
   if (resolved.sessionsRoot === '' || resolved.cacheFile === '') {
     throw new Error('dsh-usage-lens: DSH_HOME is unset and no sessionsRoot/cacheFile config was provided')
   }
-  const trustedHosts = trustedHostsOf(ctx)
-  const fence = (req: Parameters<typeof isTrustedApiRequest>[0]): boolean => isTrustedApiRequest(req, trustedHosts)
+  // Read the connection row's trustedHosts live on every request so config
+  // changes are honored without a plugin reload (matches the /api fence).
+  const fence = (req: Parameters<typeof isTrustedApiRequest>[0]): boolean => isTrustedApiRequest(req, trustedHostsOf(ctx))
   const panel = new UsageLensPanel(fileStore(resolved.sessionsRoot, resolved.cacheFile))
 
   ctx.effect(() => ctx.webServer.register({

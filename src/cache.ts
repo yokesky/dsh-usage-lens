@@ -10,7 +10,7 @@ import { dirname } from 'node:path'
 import type { FoldState } from './types.ts'
 import { createFoldState, foldUnknownEvents } from './fold.ts'
 import { decompressSessionLog, parseLogLines } from './zstd.ts'
-import { discoverSessionLogs, SESSION_LOG_NAME } from './scan-sessions.ts'
+import { discoverSessionLogs } from './scan-sessions.ts'
 
 export const CACHE_VERSION = 2
 
@@ -107,7 +107,12 @@ export async function foldArtifact(path: string, prior?: SessionCacheEntry): Pro
   } catch {
     return null
   }
-  const events = parseLogLines(text)
+  let events: unknown[]
+  try {
+    events = parseLogLines(text)
+  } catch {
+    return null // Corrupt line JSON: same policy as an undecodable artifact.
+  }
   const folded = prior !== undefined && info.size >= prior.size ? prior.folded : createFoldState()
   const resume = prior !== undefined && info.size >= prior.size ? prior.lastSeq : -1
   foldUnknownEvents(folded, events, resume)
@@ -118,5 +123,3 @@ export async function foldArtifact(path: string, prior?: SessionCacheEntry): Pro
   }
   return { size: info.size, mtimeMs: info.mtimeMs, lastSeq, folded }
 }
-
-export { SESSION_LOG_NAME }

@@ -16,6 +16,10 @@
   --ul-hover: var(--dsw-alias-interactive-bg-hover);
   --ul-accent: var(--dsw-alias-button-info-fill);
   --ul-on-accent: var(--dsw-static-neutral-bluish-00);
+  --ul-heat-1: rgba(65, 118, 230, 0.22);
+  --ul-heat-2: rgba(65, 118, 230, 0.42);
+  --ul-heat-3: rgba(65, 118, 230, 0.66);
+  --ul-heat-4: rgba(65, 118, 230, 0.92);
   box-sizing: border-box;
   width: 100%;
   color: var(--ul-text);
@@ -212,10 +216,10 @@
   background: transparent;
 }
 
-.hmCell.level1 { background: rgba(65, 118, 230, 0.22); }
-.hmCell.level2 { background: rgba(65, 118, 230, 0.42); }
-.hmCell.level3 { background: rgba(65, 118, 230, 0.66); }
-.hmCell.level4 { background: rgba(65, 118, 230, 0.92); }
+.hmCell.level1 { background: var(--ul-heat-1); }
+.hmCell.level2 { background: var(--ul-heat-2); }
+.hmCell.level3 { background: var(--ul-heat-3); }
+.hmCell.level4 { background: var(--ul-heat-4); }
 
 .heatmapLegend {
   display: flex;
@@ -234,10 +238,10 @@
   background: var(--ul-hover);
 }
 
-.hmSwatch.l1 { background: rgba(65, 118, 230, 0.22); }
-.hmSwatch.l2 { background: rgba(65, 118, 230, 0.42); }
-.hmSwatch.l3 { background: rgba(65, 118, 230, 0.66); }
-.hmSwatch.l4 { background: rgba(65, 118, 230, 0.92); }
+.hmSwatch.l1 { background: var(--ul-heat-1); }
+.hmSwatch.l2 { background: var(--ul-heat-2); }
+.hmSwatch.l3 { background: var(--ul-heat-3); }
+.hmSwatch.l4 { background: var(--ul-heat-4); }
 
 /* ── Trend chart ───────────────────────────────────────────────────── */
 
@@ -422,7 +426,10 @@
 
 .tableProvider {
   flex: none;
-  width: 72px;
+  width: 84px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   border: none;
   background: transparent;
   color: var(--ul-text);
@@ -432,6 +439,11 @@
   text-align: left;
   padding: 0;
   cursor: pointer;
+}
+
+.tableProviderName {
+  flex: 1;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -553,4 +565,29 @@
   font-size: 13px;
   text-align: center;
   padding: 32px 0;
+}
+
+/* ── Keyboard focus & reduced motion ───────────────────────────────── */
+
+.rangeBtn:focus-visible,
+.errorRetry:focus-visible,
+.tableProvider:focus-visible,
+.tableModelRow:focus-visible,
+.tableFlatRow:focus-visible,
+.donutSlice:focus-visible {
+  outline: 2px solid var(--dsw-alias-button-info-fill, #4F7DF3);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rangeBtn,
+  .trendBar,
+  .donutArc,
+  .donutSlice {
+    transition: none;
+  }
+
+  .trendBar {
+    animation: none;
+  }
 }
